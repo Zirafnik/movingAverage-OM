@@ -6,11 +6,15 @@ function movingAvg(arr, n) {
     let left = 0;
     let right = n;
 
+    let results = [];
+
     while(right < arr.length) {
         let result = 0;
         for(let i = left; i < right; i++) {
             result += arr[i];
         }
+
+        results.push(result/n);
 
         let forecast = `F${right + 1}:`;
         console.log(forecast, result/n);
@@ -18,7 +22,23 @@ function movingAvg(arr, n) {
         right++
     }
 
+    //getForecastErrors(prevDemands, results, n);
     console.log('==========================');
+}
+
+function getForecastErrors(actual, forecasts, n) {
+    let errors = [];
+
+    //trim actual data to match forecasts periods
+    actual.splice(0, n);
+
+    for(let i = 0; i < forecasts.length; i++) {
+        let e = actual[0] - forecasts[0];
+        errors.push(e);
+    }
+
+    console.log(errors);
+    return errors;
 }
 
 movingAvg(prevDemands, 3);
